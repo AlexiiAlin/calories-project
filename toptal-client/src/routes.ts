@@ -1,0 +1,106 @@
+// core components
+import VpnKey from "@material-ui/icons/VpnKey";
+import Login from "./components/pages/auth/login/Login";
+import PatientDashboard from "./components/pages/patient/dashboard/PatientDashboard";
+import {UserType} from "./contexts/user-context";
+import ManageUsers from "./components/pages/admin/manage-users/ManageUsers";
+import Register from "./components/pages/auth/register/Register";
+import PatientProfile from "./components/pages/patient/profile/PatientProfile";
+import AddEditInfo from "./components/pages/patient/add-edit-info/AddEditInfo";
+
+export type RouteLayout = '/auth' | '/patient' | '/admin';
+
+export const ROUTES_LAYOUT = {
+  AUTH: '/auth',
+  PATIENT: '/patient',
+  ADMIN: '/admin',
+};
+
+export const USER_TYPE_ROUTE = {
+  [UserType.PATIENT]: ROUTES_LAYOUT.PATIENT,
+  [UserType.ADMIN]: ROUTES_LAYOUT.ADMIN,
+};
+
+interface Route {
+  path: string;
+  name: string;
+  icon: any;
+  iconColor: string;
+  component: any;
+  hideFromSidebar?: boolean;
+  layout: any;
+  roles: Array<UserType>;
+}
+
+export const authRoutes = [
+  {
+    path: "/login",
+    name: "Login",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: Login,
+    layout: ROUTES_LAYOUT.AUTH,
+    roles: [],
+    hideFromSidebar: true,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: Register,
+    layout: ROUTES_LAYOUT.AUTH,
+    roles: [],
+    hideFromSidebar: true,
+  }
+];
+
+export const patientRoutes: Array<Route> = [
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: PatientDashboard,
+    layout: ROUTES_LAYOUT.PATIENT,
+    roles: [UserType.PATIENT]
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: PatientProfile,
+    hideFromSidebar: true,
+    layout: ROUTES_LAYOUT.PATIENT,
+    roles: [UserType.PATIENT]
+  },
+  {
+    path: "/edit-profile",
+    name: "Edit profile",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: AddEditInfo,
+    hideFromSidebar: true,
+    layout: ROUTES_LAYOUT.PATIENT,
+    roles: [UserType.PATIENT]
+  },
+];
+
+export const adminRoutes = [
+  {
+    path: "/manage-users",
+    name: "Manage users",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: ManageUsers,
+    layout: ROUTES_LAYOUT.ADMIN,
+    roles: [UserType.ADMIN]
+  },
+];
+
+export const routes = [
+  ...authRoutes,
+  ...patientRoutes,
+  ...adminRoutes,
+];

@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.general-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px 24px 24px;
+}
+
+.MuiTypography-h2 {
+  margin-bottom: 36px !important;
+}
+
+.general-row, .general-column {
+  display: flex;
+  width: 50%;
+  min-width: 600px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.general-column {
+  flex-direction: column;
+}
+
+.general-label {
+  width: 50%;
+  min-width: 200px;
+}
+
+.general-value {
+  width: 50%;
+  min-width: 200px;
+}
+
+.MuiAutocomplete-input  {
+  background-color: transparent !important;
+  color: #525f7f !important;
+}
+
+.MuiInput-underline:before {
+  content: none !important;
+}
+
+.form-control {
+  min-width: 120px;
+  margin: 4px;
+}
+
+.MuiInputBase-input {
+  color: #525f7f !important;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+textarea {
+  border-right: none !important;
+}
+
+.MuiTextField-root {
+  background: white;
+}
+
+.MuiButton-containedSecondary:hover {
+  border-color: #f93305 !important;
+  background-color: #f93305 !important;
+}
+
+.margin-negative {
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+.margin-negative-L {
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.error-color {
+  color: #f5365c;
+}

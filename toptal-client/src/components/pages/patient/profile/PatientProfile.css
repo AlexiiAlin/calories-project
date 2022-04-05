@@ -1,0 +1,15 @@
+.paper-min-width {
+  min-width: 600px;
+}
+
+.avatar-wrapper {
+  margin: 0 auto 40px;
+}
+
+.avatar-content {
+  background-color: #F3F8E6 !important;
+  color: #84BD06 !important;
+  font-size: 32px !important;
+  width: 80px !important;
+  height: 80px !important;
+}

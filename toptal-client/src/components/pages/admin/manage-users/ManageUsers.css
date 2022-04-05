@@ -1,0 +1,13 @@
+.manage-users-table-container {
+  max-height: 896px;
+}
+
+.table-row-content {
+  display: flex;
+  height: 42px;
+}
+
+.margin-auto-0 {
+  margin: auto 0;
+}
+
