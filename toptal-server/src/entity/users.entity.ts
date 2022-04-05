@@ -22,7 +22,7 @@ export class UserEntity implements User {
   password: string;
 
   @Column({
-    default: 0,
+    default: 1,
   })
   userType: number;
 

@@ -9,12 +9,6 @@ export class CreateUserDto {
 
   @IsString()
   public password: string;
-
-  @IsNumber()
-  caloriesLimit: number;
-
-  @IsNumber()
-  monthlyLimit: number;
 }
 
 export class LoginUserDto {
