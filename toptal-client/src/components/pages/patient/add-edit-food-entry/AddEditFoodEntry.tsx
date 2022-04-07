@@ -9,7 +9,8 @@ import {GeneralInputRow} from "../../../shared/general-input-row/GeneralInputRow
 import {FoodEntry} from "../../../../store/food-entries/food-entries-state";
 import {FoodEntriesActions} from "../../../../store/food-entries/food-entries-actions";
 import {GeneralDatePickerRow} from "../../../shared/general-datepicker-row/GeneralDatePickerRow";
-import {UserContext} from "../../../../contexts/user-context";
+import {UserContext, UserType} from "../../../../contexts/user-context";
+import {checkUserType} from "../../../../helpers/utils";
 
 interface AddEditFoodEntryProps extends RouteProps {
 }
@@ -20,6 +21,7 @@ function AddEditFoodEntry(props: AddEditFoodEntryProps) {
   const [userContext] = useContext(UserContext);
   const dispatch = useDispatch();
   const history = useHistory();
+  const isAdmin = checkUserType(userContext, UserType.ADMIN);
 
   const {created, edited, deleted, loading} = useSelector((state: AppState) => state.foodEntries);
   if (created || edited || deleted) {
@@ -85,9 +87,12 @@ function AddEditFoodEntry(props: AddEditFoodEntryProps) {
 
   return (
     <div className="general-wrapper">
-      <Typography variant="h2">
-        {foodEntry ? 'Edit' : 'Add'} food entry
-      </Typography>
+      <div className="mb-4">
+        <Typography variant="h2">
+          {foodEntry ? 'Edit' : 'Add'} food entry
+        </Typography>
+      </div>
+
 
       <GeneralInputRow
         label={'Food name'}
@@ -114,7 +119,7 @@ function AddEditFoodEntry(props: AddEditFoodEntryProps) {
 
       <div className="general-row mt-4">
         { loading && <CircularProgress className="mr-4"/> }
-        { foodEntry && deleteButton}
+        { isAdmin && foodEntry && deleteButton}
         {submitButton}
       </div>
     </div>

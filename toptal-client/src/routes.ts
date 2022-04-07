@@ -1,7 +1,7 @@
 // core components
 import VpnKey from "@material-ui/icons/VpnKey";
 import Login from "./components/pages/auth/login/Login";
-import PatientDashboard from "./components/pages/patient/dashboard/PatientDashboard";
+import ListFoodEntries from "./components/pages/patient/dashboard/ListFoodEntries";
 import {UserType} from "./contexts/user-context";
 import ManageUsers from "./components/pages/admin/manage-users/ManageUsers";
 import Register from "./components/pages/auth/register/Register";
@@ -62,7 +62,7 @@ export const patientRoutes: Array<Route> = [
     name: "Dashboard",
     icon: VpnKey,
     iconColor: "Info",
-    component: PatientDashboard,
+    component: ListFoodEntries,
     layout: ROUTES_LAYOUT.PATIENT,
     roles: [UserType.PATIENT]
   },
@@ -95,16 +95,6 @@ export const patientRoutes: Array<Route> = [
     layout: ROUTES_LAYOUT.PATIENT,
     roles: [UserType.PATIENT]
   },
-  {
-    path: "/edit-food-entry",
-    name: "Edit food entry",
-    icon: VpnKey,
-    iconColor: "Info",
-    component: AddEditFoodEntry,
-    hideFromSidebar: true,
-    layout: ROUTES_LAYOUT.PATIENT,
-    roles: [UserType.PATIENT]
-  },
 ];
 
 export const adminRoutes = [
@@ -114,6 +104,34 @@ export const adminRoutes = [
     icon: VpnKey,
     iconColor: "Info",
     component: ManageUsers,
+    layout: ROUTES_LAYOUT.ADMIN,
+    roles: [UserType.ADMIN]
+  },
+  {
+    path: "/food-entries",
+    name: "Mange food entries",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: ListFoodEntries,
+    layout: ROUTES_LAYOUT.ADMIN,
+    roles: [UserType.ADMIN]
+  },
+  {
+    path: "/add-food-entry",
+    name: "Add food entry",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: AddEditFoodEntry,
+    layout: ROUTES_LAYOUT.PATIENT,
+    roles: [UserType.PATIENT]
+  },
+  {
+    path: "/edit-food-entry",
+    name: "Edit food entry",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: AddEditFoodEntry,
+    hideFromSidebar: true,
     layout: ROUTES_LAYOUT.ADMIN,
     roles: [UserType.ADMIN]
   },

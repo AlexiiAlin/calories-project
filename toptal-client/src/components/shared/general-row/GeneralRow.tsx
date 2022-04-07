@@ -3,7 +3,7 @@ import React from "react";
 
 interface GeneralTextRowProps {
   label: string;
-  value: string;
+  value: string | number;
   noMarginBottom?: boolean;
 }
 

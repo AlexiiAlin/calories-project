@@ -14,14 +14,11 @@ export function* foodEntriesSaga() {
 }
 
 function* loadFoodEntries(action: IAction) {
-  const loadOneFoodEntry = Boolean(action.payload);
-  const url = loadOneFoodEntry ? `food-entries/${action.payload}` : 'food-entries';
+  yield delay(1000);
+  const loadUsersFoodEntries = Boolean(action.payload);
+  const url = loadUsersFoodEntries ? `food-entries/?userId=${action.payload}` : 'food-entries';
   const result = yield call(axiosInstance.get, url);
-  if (loadOneFoodEntry) {
-    yield put(FoodEntriesActions.loadFoodEntriesSuccess([result.data]));
-  } else {
-    yield put(FoodEntriesActions.loadFoodEntriesSuccess(result.data));
-  }
+  yield put(FoodEntriesActions.loadFoodEntriesSuccess(result.data));
 }
 
 function* createFoodEntry(action: IAction) {

@@ -19,7 +19,7 @@ import {UsersActions} from "../../../../store/users/users-actions";
 
 export type ColumnId = 'id' | 'name' | 'email' | 'userType';
 
-interface TableColumn {
+export interface TableColumn {
   id: ColumnId;
   label: string;
   minWidth: number;
@@ -76,7 +76,7 @@ function ManageUsers() {
       setUser(null);
       setChangedColumn(null);
     }
-  }, [rows])
+  }, [rows, isEditing])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
