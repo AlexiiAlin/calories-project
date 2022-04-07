@@ -14,6 +14,8 @@ type FormValues = {
   name: string;
   email: string;
   password: string;
+  caloriesLimit: number;
+  monthlyLimit: number;
   emailExists: any;
 };
 
@@ -22,6 +24,8 @@ const getDefaultValues = (userInfo: UserInfo): FormValues => {
     name: userInfo.name || '',
     email: userInfo.email || '',
     password: '',
+    caloriesLimit: userInfo.caloriesLimit || 2100,
+    monthlyLimit: userInfo.monthlyLimit || 1000,
     emailExists: false
   };
 }
@@ -39,6 +43,8 @@ function AddEditInfo(props: RouteProps) {
       id: userInfo.id,
       name: data.name,
       email: data.email,
+      monthlyLimit: Number(data.monthlyLimit),
+      caloriesLimit: Number(data.caloriesLimit),
       password: data.password,
     };
     dispatch(UsersActions.editUser(editedPatient));
@@ -133,6 +139,46 @@ function AddEditInfo(props: RouteProps) {
           </div>
           <div className="general-row">
             {errors?.password && <p className="error-color w-fit">{errors.password.message}</p>}
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <div className="general-row">
+            <div className="general-label">
+              <Typography variant="body1">
+                User calories limit:
+              </Typography>
+            </div>
+            <div className="general-value">
+              <Input
+                className='w-full'
+                type={'number'}
+                {...register("caloriesLimit", {required: "This field is required", maxLength: 100})}
+              />
+            </div>
+          </div>
+          <div className="general-row">
+            {errors?.caloriesLimit && <p className="error-color w-fit">{errors.caloriesLimit.message}</p>}
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <div className="general-row">
+            <div className="general-label">
+              <Typography variant="body1">
+                User monthly limit:
+              </Typography>
+            </div>
+            <div className="general-value">
+              <Input
+                className='w-full'
+                type={'text'}
+                {...register("monthlyLimit", {required: "This field is required", maxLength: 100})}
+              />
+            </div>
+          </div>
+          <div className="general-row">
+            {errors?.monthlyLimit && <p className="error-color w-fit">{errors.monthlyLimit.message}</p>}
           </div>
         </div>
 

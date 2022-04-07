@@ -2,7 +2,6 @@ import {all, takeEvery, call, put, delay} from "redux-saga/effects";
 import axiosInstance from "../../helpers/axios-base";
 import {USERS_ACTION_TYPES, UsersActions} from "./users-actions";
 import {IAction} from "../interfaces";
-import {UserInfo} from "../../contexts/user-context";
 import {sanitiseObject} from "../../helpers/utils";
 
 export function* usersSaga() {
@@ -32,14 +31,7 @@ function* createUser(action: IAction) {
 function* editUser(action: IAction) {
   try {
     yield delay(1000);
-    const editedUser: Partial<UserInfo> = {
-      id: action.payload.id,
-      email: action.payload.email,
-      name: action.payload.name,
-      password: action.payload.password,
-      userType: action.payload.userType,
-    };
-    yield call(axiosInstance.put, `users/${action.payload.id}`, sanitiseObject(editedUser));
+    yield call(axiosInstance.put, `users/${action.payload.id}`, sanitiseObject(action.payload));
     yield put(UsersActions.editUserSuccess());
     yield put(UsersActions.loadUsers());
   } catch (e) {
