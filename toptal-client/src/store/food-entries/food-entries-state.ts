@@ -10,6 +10,7 @@ export interface FoodEntry {
 export interface FoodEntriesState {
   data: FoodEntry[];
   loading: boolean;
+  created: boolean;
   edited: boolean;
   deleted: boolean;
   error: any;

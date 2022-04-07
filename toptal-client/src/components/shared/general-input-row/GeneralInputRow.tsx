@@ -38,7 +38,11 @@ export const GeneralInputRow = (props: GeneralTextRowProps) => {
                 type={type || 'text'}
                 value={value}
                 onChange={((ev) => {
-                  setValue(ev.target.value);
+                  if (type === 'number') {
+                    setValue(Number(ev.target.value));
+                  } else {
+                    setValue(ev.target.value);
+                  }
                 })}
               />
         }

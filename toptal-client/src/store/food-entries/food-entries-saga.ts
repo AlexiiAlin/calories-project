@@ -7,6 +7,7 @@ import {FOOD_ENTRIES_ACTION_TYPES, FoodEntriesActions} from "./food-entries-acti
 export function* foodEntriesSaga() {
   yield all([
     takeEvery(FOOD_ENTRIES_ACTION_TYPES.LOAD_START, loadFoodEntries),
+    takeEvery(FOOD_ENTRIES_ACTION_TYPES.CREATE_START, createFoodEntry),
     takeEvery(FOOD_ENTRIES_ACTION_TYPES.EDIT_START, editFoodEntry),
     takeEvery(FOOD_ENTRIES_ACTION_TYPES.DELETE_START, deleteFoodEntry)
   ]);
@@ -20,6 +21,16 @@ function* loadFoodEntries(action: IAction) {
     yield put(FoodEntriesActions.loadFoodEntriesSuccess([result.data]));
   } else {
     yield put(FoodEntriesActions.loadFoodEntriesSuccess(result.data));
+  }
+}
+
+function* createFoodEntry(action: IAction) {
+  try {
+    yield delay(1000);
+    yield call(axiosInstance.post, `food-entries`, sanitiseObject(action.payload));
+    yield put(FoodEntriesActions.createFoodEntrySuccess());
+  } catch (e) {
+    yield put(FoodEntriesActions.createFoodEntryFail(e));
   }
 }
 

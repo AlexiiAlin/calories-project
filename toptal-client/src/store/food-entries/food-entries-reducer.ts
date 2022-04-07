@@ -5,6 +5,7 @@ import {FOOD_ENTRIES_ACTION_TYPES} from "./food-entries-actions";
 export const initialState: FoodEntriesState = {
   data: [],
   loading: false,
+  created: false,
   edited: false,
   deleted: false,
   error: null
@@ -17,6 +18,15 @@ export const foodEntriesReducer = (state = initialState, action: IAction) => {
     }
     case FOOD_ENTRIES_ACTION_TYPES.LOAD_SUCCESS: {
       return {...state, loading: false, data: action.payload};
+    }
+    case FOOD_ENTRIES_ACTION_TYPES.CREATE_START: {
+      return {...state, loading: true, created: false};
+    }
+    case FOOD_ENTRIES_ACTION_TYPES.CREATE_SUCCESS: {
+      return {...state, loading: false, created: true};
+    }
+    case FOOD_ENTRIES_ACTION_TYPES.CREATE_FAIL: {
+      return {...state, loading: false, created: false, error: action.error};
     }
     case FOOD_ENTRIES_ACTION_TYPES.EDIT_START: {
       return {...state, loading: true, edited: false};

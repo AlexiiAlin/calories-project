@@ -37,10 +37,6 @@ function PatientProfile() {
     dispatch(UsersActions.resetState());
   }
 
-  if (userContext && userContext.user) {
-    console.log('user: ', userContext.user);
-  }
-
   return (
     <div className="flex flex-col w-full mt-4">
       <div className="flex w-full">

@@ -7,6 +7,7 @@ import ManageUsers from "./components/pages/admin/manage-users/ManageUsers";
 import Register from "./components/pages/auth/register/Register";
 import PatientProfile from "./components/pages/patient/profile/PatientProfile";
 import AddEditInfo from "./components/pages/patient/add-edit-info/AddEditInfo";
+import AddEditFoodEntry from "./components/pages/patient/add-edit-food-entry/AddEditFoodEntry";
 
 export type RouteLayout = '/auth' | '/patient' | '/admin';
 
@@ -81,6 +82,25 @@ export const patientRoutes: Array<Route> = [
     icon: VpnKey,
     iconColor: "Info",
     component: AddEditInfo,
+    hideFromSidebar: true,
+    layout: ROUTES_LAYOUT.PATIENT,
+    roles: [UserType.PATIENT]
+  },
+  {
+    path: "/add-food-entry",
+    name: "Add food entry",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: AddEditFoodEntry,
+    layout: ROUTES_LAYOUT.PATIENT,
+    roles: [UserType.PATIENT]
+  },
+  {
+    path: "/edit-food-entry",
+    name: "Edit food entry",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: AddEditFoodEntry,
     hideFromSidebar: true,
     layout: ROUTES_LAYOUT.PATIENT,
     roles: [UserType.PATIENT]

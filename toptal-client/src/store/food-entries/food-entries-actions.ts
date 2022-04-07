@@ -3,6 +3,9 @@ import {FoodEntry} from "./food-entries-state";
 export const FOOD_ENTRIES_ACTION_TYPES = {
   LOAD_START: '[FOOD_ENTRIES]LOAD_START',
   LOAD_SUCCESS: '[FOOD_ENTRIES]LOAD_SUCCESS',
+  CREATE_START: '[FOOD_ENTRIES]CREATE_START',
+  CREATE_SUCCESS: '[FOOD_ENTRIES]CREATE_SUCCESS',
+  CREATE_FAIL: '[FOOD_ENTRIES]CREATE_FAIL',
   EDIT_START: '[FOOD_ENTRIES]EDIT_START',
   EDIT_SUCCESS: '[FOOD_ENTRIES]EDIT_SUCCESS',
   EDIT_FAIL: '[FOOD_ENTRIES]EDIT_FAIL',
@@ -13,10 +16,10 @@ export const FOOD_ENTRIES_ACTION_TYPES = {
 }
 
 export class FoodEntriesActions {
-  static loadFoodEntries(patientId?: string) {
+  static loadFoodEntries(foodEntryId?: string) {
     return {
       type: FOOD_ENTRIES_ACTION_TYPES.LOAD_START,
-      payload: patientId
+      payload: foodEntryId
     }
   }
   static loadFoodEntriesSuccess(foodEntries: FoodEntry[]) {
@@ -26,10 +29,28 @@ export class FoodEntriesActions {
     }
   }
 
-  static editFoodEntry(patient: Partial<FoodEntry>) {
+  static createFoodEntry(foodEntry: Partial<FoodEntry>) {
+    return {
+      type: FOOD_ENTRIES_ACTION_TYPES.CREATE_START,
+      payload: foodEntry
+    }
+  }
+  static createFoodEntrySuccess() {
+    return {
+      type: FOOD_ENTRIES_ACTION_TYPES.CREATE_SUCCESS,
+    }
+  }
+  static createFoodEntryFail(error) {
+    return {
+      type: FOOD_ENTRIES_ACTION_TYPES.CREATE_FAIL,
+      error
+    }
+  }
+
+  static editFoodEntry(foodEntry: Partial<FoodEntry>) {
     return {
       type: FOOD_ENTRIES_ACTION_TYPES.EDIT_START,
-      payload: patient
+      payload: foodEntry
     }
   }
   static editFoodEntrySuccess() {
@@ -50,10 +71,10 @@ export class FoodEntriesActions {
     }
   }
 
-  static deleteFoodEntry(patientId: string) {
+  static deleteFoodEntry(id: number) {
     return {
       type: FOOD_ENTRIES_ACTION_TYPES.DELETE_START,
-      payload: patientId
+      payload: id
     }
   }
   static deleteFoodEntrySuccess() {
