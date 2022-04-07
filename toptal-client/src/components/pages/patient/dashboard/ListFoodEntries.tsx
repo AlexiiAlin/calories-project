@@ -117,10 +117,17 @@ function ListFoodEntries() {
                 foodEntries && foodEntries.length > 0 &&
                   foodEntries.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} className="cursor-pointer">
+                      <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                         {columns.map((column) => {
                           return (
-                            <TableCell key={column.id} align={column.align}>
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              className={isAdmin && column.id === 'foodName' ? 'cursor-pointer' : ''}
+                              onClick={() => {
+                                if (column.id !== 'foodName') return;
+                                handleRowClick(row);
+                              }}>
                               <div className="table-row-content">
                                 <div className="margin-auto-0">
                                   {column.format ? column.format(row[column.id]) : row[column.id]}

@@ -99,6 +99,15 @@ export const patientRoutes: Array<Route> = [
 
 export const adminRoutes = [
   {
+    path: "/dashboard",
+    name: "Mange food entries",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: ListFoodEntries,
+    layout: ROUTES_LAYOUT.ADMIN,
+    roles: [UserType.ADMIN]
+  },
+  {
     path: "/manage-users",
     name: "Manage users",
     icon: VpnKey,
@@ -108,22 +117,13 @@ export const adminRoutes = [
     roles: [UserType.ADMIN]
   },
   {
-    path: "/food-entries",
-    name: "Mange food entries",
-    icon: VpnKey,
-    iconColor: "Info",
-    component: ListFoodEntries,
-    layout: ROUTES_LAYOUT.ADMIN,
-    roles: [UserType.ADMIN]
-  },
-  {
     path: "/add-food-entry",
     name: "Add food entry",
     icon: VpnKey,
     iconColor: "Info",
     component: AddEditFoodEntry,
-    layout: ROUTES_LAYOUT.PATIENT,
-    roles: [UserType.PATIENT]
+    layout: ROUTES_LAYOUT.ADMIN,
+    roles: [UserType.ADMIN]
   },
   {
     path: "/edit-food-entry",
