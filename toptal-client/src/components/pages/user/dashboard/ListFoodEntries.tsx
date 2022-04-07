@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import './PatientDashboard.css';
+import './UserDashboard.css';
 import {useHistory} from "react-router-dom";
 import {ROUTES_LAYOUT} from "../../../../routes";
 import {FoodEntriesActions} from "../../../../store/food-entries/food-entries-actions";
@@ -37,18 +37,18 @@ const columns: Array<TableColumn> = [
 function ListFoodEntries() {
   const history = useHistory();
   const [userContext] = useContext(UserContext);
-  const isPatient = checkUserType(userContext, UserType.PATIENT);
+  const isUser = checkUserType(userContext, UserType.USER);
   const isAdmin = checkUserType(userContext, UserType.ADMIN);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isPatient && userContext.user.id) {
+    if (isUser && userContext.user.id) {
       dispatch(FoodEntriesActions.loadFoodEntries(userContext.user.id));
     } else {
       dispatch(FoodEntriesActions.loadFoodEntries());
     }
-  }, [dispatch, isPatient, userContext]);
+  }, [dispatch, isUser, userContext]);
 
   const {data: foodEntries, loading, deleted} = useSelector((state: AppState) => state.foodEntries);
 
@@ -63,7 +63,7 @@ function ListFoodEntries() {
   }
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -165,7 +165,7 @@ function ListFoodEntries() {
           }
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[5, 10, 25]}
           component={'div'}
           count={foodEntries.length}
           rowsPerPage={rowsPerPage}

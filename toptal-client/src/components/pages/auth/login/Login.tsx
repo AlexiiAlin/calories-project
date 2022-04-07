@@ -48,8 +48,8 @@ function Login() {
           user: response.data.data
         });
         switch (response.data.data.userType) {
-          case UserType.PATIENT: {
-            history.push(ROUTES_LAYOUT.PATIENT + '/dashboard');
+          case UserType.USER: {
+            history.push(ROUTES_LAYOUT.USER + '/dashboard');
             break;
           }
           case UserType.ADMIN: {

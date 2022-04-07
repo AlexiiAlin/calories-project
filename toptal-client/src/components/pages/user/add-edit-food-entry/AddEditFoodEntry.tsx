@@ -26,7 +26,7 @@ function AddEditFoodEntry(props: AddEditFoodEntryProps) {
   const {created, edited, deleted, loading} = useSelector((state: AppState) => state.foodEntries);
   if (created || edited || deleted) {
     dispatch(FoodEntriesActions.resetState());
-    history.push(ROUTES_LAYOUT.PATIENT + '/dashboard');
+    history.push(ROUTES_LAYOUT.USER + '/dashboard');
   }
 
   // React State

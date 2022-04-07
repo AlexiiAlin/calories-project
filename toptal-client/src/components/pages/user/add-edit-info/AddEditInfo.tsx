@@ -39,7 +39,7 @@ function AddEditInfo(props: RouteProps) {
     defaultValues: getDefaultValues(userInfo)
   });
   const onSubmit = handleSubmit((data) => {
-    const editedPatient = {
+    const editedUser = {
       id: userInfo.id,
       name: data.name,
       email: data.email,
@@ -47,14 +47,14 @@ function AddEditInfo(props: RouteProps) {
       caloriesLimit: Number(data.caloriesLimit),
       password: data.password,
     };
-    dispatch(UsersActions.editUser(editedPatient));
+    dispatch(UsersActions.editUser(editedUser));
   });
 
   const {edited, loading, error} = useSelector((state: AppState) => state.users);
 
   useEffect(() => {
     if (edited) {
-      history.push(ROUTES_LAYOUT.PATIENT + '/profile');
+      history.push(ROUTES_LAYOUT.USER + '/profile');
     }
   }, [dispatch, history, edited]);
 

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 import {UserContext} from "../../../../contexts/user-context";
-import './PatientProfile.css';
+import './UserProfile.css';
 import {useDispatch, useSelector} from "react-redux";
 import {ROUTES_LAYOUT} from "../../../../routes";
 import {useHistory} from "react-router-dom";
@@ -26,7 +26,7 @@ const ProfileRow = ({label, value}) => {
   )
 }
 
-function PatientProfile() {
+function UserProfile() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [userContext] = useContext(UserContext);
@@ -46,8 +46,8 @@ function PatientProfile() {
                 <div className="avatar-wrapper">
                   <Avatar className="avatar-content">A</Avatar>
                 </div>
-                <ProfileRow label={'Patient name'} value={userContext.user.name}/>
-                <ProfileRow label={'Patient email'} value={userContext.user.email}/>
+                <ProfileRow label={'User name'} value={userContext.user.name}/>
+                <ProfileRow label={'User email'} value={userContext.user.email}/>
 
                 {
                   <div className="flex flex-row mx-auto mb-4">
@@ -55,7 +55,7 @@ function PatientProfile() {
                       className="mx-auto"
                       onClick={() => {
                         history.push({
-                          pathname: ROUTES_LAYOUT.PATIENT + '/edit-profile',
+                          pathname: ROUTES_LAYOUT.USER + '/edit-profile',
                           state: userContext.user
                         })
                       }}
@@ -72,4 +72,4 @@ function PatientProfile() {
   )
 }
 
-export default PatientProfile;
+export default UserProfile;

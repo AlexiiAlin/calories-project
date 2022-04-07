@@ -25,8 +25,8 @@ const Auth = (props) => {
   }
   if (userContext.user) {
     switch (userContext.user.userType) {
-      case UserType.PATIENT: {
-        history.push(ROUTES_LAYOUT.PATIENT + '/dashboard');
+      case UserType.USER: {
+        history.push(ROUTES_LAYOUT.USER + '/dashboard');
         break;
       }
       case UserType.ADMIN: {

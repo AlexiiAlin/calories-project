@@ -1,25 +1,25 @@
 // core components
 import VpnKey from "@material-ui/icons/VpnKey";
 import Login from "./components/pages/auth/login/Login";
-import ListFoodEntries from "./components/pages/patient/dashboard/ListFoodEntries";
+import ListFoodEntries from "./components/pages/user/dashboard/ListFoodEntries";
 import {UserType} from "./contexts/user-context";
 import ManageUsers from "./components/pages/admin/manage-users/ManageUsers";
 import Register from "./components/pages/auth/register/Register";
-import PatientProfile from "./components/pages/patient/profile/PatientProfile";
-import AddEditInfo from "./components/pages/patient/add-edit-info/AddEditInfo";
-import AddEditFoodEntry from "./components/pages/patient/add-edit-food-entry/AddEditFoodEntry";
-import CaloriesDashboard from "./components/pages/patient/calories-dashboard/CaloriesDashboard";
+import UserProfile from "./components/pages/user/profile/UserProfile";
+import AddEditInfo from "./components/pages/user/add-edit-info/AddEditInfo";
+import AddEditFoodEntry from "./components/pages/user/add-edit-food-entry/AddEditFoodEntry";
+import CaloriesDashboard from "./components/pages/user/calories-dashboard/CaloriesDashboard";
 
-export type RouteLayout = '/auth' | '/patient' | '/admin';
+export type RouteLayout = '/auth' | '/user' | '/admin';
 
 export const ROUTES_LAYOUT = {
   AUTH: '/auth',
-  PATIENT: '/patient',
+  USER: '/user',
   ADMIN: '/admin',
 };
 
 export const USER_TYPE_ROUTE = {
-  [UserType.PATIENT]: ROUTES_LAYOUT.PATIENT,
+  [UserType.USER]: ROUTES_LAYOUT.USER,
   [UserType.ADMIN]: ROUTES_LAYOUT.ADMIN,
 };
 
@@ -57,15 +57,15 @@ export const authRoutes = [
   }
 ];
 
-export const patientRoutes: Array<Route> = [
+export const userRoutes: Array<Route> = [
   {
     path: "/dashboard",
     name: "Food entries",
     icon: VpnKey,
     iconColor: "Info",
     component: ListFoodEntries,
-    layout: ROUTES_LAYOUT.PATIENT,
-    roles: [UserType.PATIENT]
+    layout: ROUTES_LAYOUT.USER,
+    roles: [UserType.USER]
   },
   {
     path: "/calories",
@@ -73,18 +73,18 @@ export const patientRoutes: Array<Route> = [
     icon: VpnKey,
     iconColor: "Info",
     component: CaloriesDashboard,
-    layout: ROUTES_LAYOUT.PATIENT,
-    roles: [UserType.PATIENT]
+    layout: ROUTES_LAYOUT.USER,
+    roles: [UserType.USER]
   },
   {
     path: "/profile",
     name: "Profile",
     icon: VpnKey,
     iconColor: "Info",
-    component: PatientProfile,
+    component: UserProfile,
     hideFromSidebar: true,
-    layout: ROUTES_LAYOUT.PATIENT,
-    roles: [UserType.PATIENT]
+    layout: ROUTES_LAYOUT.USER,
+    roles: [UserType.USER]
   },
   {
     path: "/edit-profile",
@@ -93,8 +93,8 @@ export const patientRoutes: Array<Route> = [
     iconColor: "Info",
     component: AddEditInfo,
     hideFromSidebar: true,
-    layout: ROUTES_LAYOUT.PATIENT,
-    roles: [UserType.PATIENT]
+    layout: ROUTES_LAYOUT.USER,
+    roles: [UserType.USER]
   },
   {
     path: "/add-food-entry",
@@ -102,8 +102,8 @@ export const patientRoutes: Array<Route> = [
     icon: VpnKey,
     iconColor: "Info",
     component: AddEditFoodEntry,
-    layout: ROUTES_LAYOUT.PATIENT,
-    roles: [UserType.PATIENT]
+    layout: ROUTES_LAYOUT.USER,
+    roles: [UserType.USER]
   },
 ];
 
@@ -149,6 +149,6 @@ export const adminRoutes = [
 
 export const routes = [
   ...authRoutes,
-  ...patientRoutes,
+  ...userRoutes,
   ...adminRoutes,
 ];

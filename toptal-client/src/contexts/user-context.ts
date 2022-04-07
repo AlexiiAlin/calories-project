@@ -18,7 +18,7 @@ export interface UserInfo {
 
 export enum UserType {
   NONE,
-  PATIENT,
+  USER,
   ADMIN,
 }
 
