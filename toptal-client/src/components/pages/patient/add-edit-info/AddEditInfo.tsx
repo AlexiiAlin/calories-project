@@ -5,10 +5,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {UserInfo} from "../../../../contexts/user-context";
 import {RouteProps} from "../../../../helpers/interfaces";
 import {useHistory} from "react-router-dom";
-import {PatientsActions} from "../../../../store/patients/patients-actions";
 import {AppState} from "../../../../store/app-state";
 import {ROUTES_LAYOUT} from "../../../../routes";
 import {useForm} from "react-hook-form";
+import {UsersActions} from "../../../../store/users/users-actions";
 
 type FormValues = {
   name: string;
@@ -41,14 +41,13 @@ function AddEditInfo(props: RouteProps) {
       email: data.email,
       password: data.password,
     };
-    dispatch(PatientsActions.editPatient(editedPatient));
+    dispatch(UsersActions.editUser(editedPatient));
   });
 
-  const {edited, loading, error} = useSelector((state: AppState) => state.patients);
+  const {edited, loading, error} = useSelector((state: AppState) => state.users);
 
   useEffect(() => {
     if (edited) {
-      dispatch(PatientsActions.resetState());
       history.push(ROUTES_LAYOUT.PATIENT + '/profile');
     }
   }, [dispatch, history, edited]);
@@ -61,7 +60,7 @@ function AddEditInfo(props: RouteProps) {
       });
       setTimeout(() => {
         clearErrors('emailExists');
-        dispatch(PatientsActions.resetState());
+        dispatch(UsersActions.resetState());
       }, 3000);
     }
   }, [dispatch, error, setError, clearErrors]);

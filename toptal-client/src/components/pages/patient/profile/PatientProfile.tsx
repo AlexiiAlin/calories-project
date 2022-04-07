@@ -1,11 +1,13 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 import {UserContext} from "../../../../contexts/user-context";
 import './PatientProfile.css';
-import {useDispatch} from "react-redux";
-import {PatientsActions} from "../../../../store/patients/patients-actions";
+import {useDispatch, useSelector} from "react-redux";
 import {ROUTES_LAYOUT} from "../../../../routes";
 import {useHistory} from "react-router-dom";
+import initializeUserContextData from "../../../../hooks/user-hooks";
+import {AppState} from "../../../../store/app-state";
+import {UsersActions} from "../../../../store/users/users-actions";
 
 const ProfileRow = ({label, value}) => {
   return (
@@ -25,15 +27,19 @@ const ProfileRow = ({label, value}) => {
 }
 
 function PatientProfile() {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [userContext] = useContext(UserContext);
+  const {edited} = useSelector((state: AppState) => state.users);
 
-  useEffect(() => {
-    if (userContext && userContext.user && userContext.user.id) {
-      dispatch(PatientsActions.loadPatients(userContext.user.id));
-    }
-  }, [dispatch, userContext]);
+  if (edited) {
+    initializeUserContextData(true);
+    dispatch(UsersActions.resetState());
+  }
+
+  if (userContext && userContext.user) {
+    console.log('user: ', userContext.user);
+  }
 
   return (
     <div className="flex flex-col w-full mt-4">

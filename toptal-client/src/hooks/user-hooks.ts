@@ -5,10 +5,10 @@ import {useHistory} from "react-router-dom";
 import {ROUTES_LAYOUT} from "../routes";
 
 function initializeUserContextData() {
-  return () => {
+  return (isUpdate = false) => {
     const history = useHistory();
     const [userContext, setUserContext] = useContext(UserContext);
-    if (!userContext.user) {
+    if (!userContext.user || isUpdate) {
       AuthService.me()
         .then(response => {
           setUserContext({

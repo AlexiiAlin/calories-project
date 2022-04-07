@@ -27,6 +27,9 @@ export class EditUserDto {
   public email: string;
 
   @IsString()
+  public password: string;
+
+  @IsString()
   public name: string;
 
   @IsNumber()

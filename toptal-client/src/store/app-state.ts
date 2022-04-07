@@ -1,7 +1,7 @@
-import {PatientsState} from "./patients/patients-state";
+import {FoodEntriesState} from "./food-entries/food-entries-state";
 import {UsersState} from "./users/users-state";
 
 export interface AppState {
-  patients: PatientsState;
+  foodEntries: FoodEntriesState;
   users: UsersState;
 }

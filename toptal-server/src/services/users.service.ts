@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { getRepository } from 'typeorm';
+import { getRepository, Not } from 'typeorm';
 import { CreateUserDto, EditUserDto } from '@dtos/users.dto';
 import { UserEntity } from '@entity/users.entity';
 import { HttpException } from '@exceptions/HttpException';
@@ -42,7 +42,15 @@ class UserService {
     const findUser: User = await userRepository.findOne({ where: { id: userId } });
     if (!findUser) throw new HttpException(409, "You're not user");
 
-    await userRepository.update(userId, userData);
+    const findUserEmail = await userRepository.findOne({ where: { email: userData.email, id: Not(userId) } });
+    if (findUserEmail) throw new HttpException(409, `The email "${userData.email}" already exists on another user`);
+
+    if (userData.password) {
+      const hashedPassword = await bcrypt.hash(userData.password, 10);
+      await userRepository.update(userId, { ...userData, password: hashedPassword });
+    } else {
+      await userRepository.update(userId, userData);
+    }
 
     return await userRepository.findOne({ where: { id: userId } });
   }
