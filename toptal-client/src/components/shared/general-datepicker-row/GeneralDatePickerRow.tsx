@@ -36,7 +36,6 @@ export const GeneralDatePickerRow = (props: GeneralDatePickerProps) => {
                 margin="normal"
                 value={value}
                 onChange={(date) => setValue(date)}
-                views={["year"]}
               />
         }
       </div>

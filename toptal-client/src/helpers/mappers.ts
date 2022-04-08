@@ -3,6 +3,7 @@ import moment from "moment";
 
 export const dateFormat = 'YYYY-MM-DD';
 
+// CaloriesDashboard.tsx
 export const computePerDayObject = (sortedFoodEntries) => {
   if (sortedFoodEntries.length < 2) {
     return {};
@@ -63,4 +64,24 @@ export const sortByDatesFn = (date1, date2) => {
     return -1;
   }
   return 0;
+}
+
+// ListFoodEntries.tsx
+
+export const filterFoodEntries = (foodEntries: FoodEntry[], startDate: Date, endDate: Date) => {
+  if (!startDate && !endDate) {
+    return foodEntries;
+  }
+  return foodEntries.filter(foodEntry => {
+    const formattedDate = moment(foodEntry.date);
+    if (!endDate) {
+      return formattedDate.isAfter(moment(startDate.toISOString()).startOf('day'));
+    } else if (!startDate) {
+      return formattedDate.isBefore(moment(endDate.toISOString()).endOf('day'));
+    }
+    return formattedDate.isBetween(
+      moment(startDate.toISOString()).startOf('day'),
+      moment(endDate.toISOString()).endOf('day')
+    );
+  });
 }

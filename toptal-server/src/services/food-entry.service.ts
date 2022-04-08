@@ -14,6 +14,7 @@ class FoodEntryService {
     const whereClause = userId ? { where: { userId } } : {};
     return foodEntriesRepository.find({
       relations: ['user'],
+      order: { date: 'DESC' },
       ...whereClause,
     });
   }

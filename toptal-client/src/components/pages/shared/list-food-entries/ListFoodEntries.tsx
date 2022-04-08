@@ -10,13 +10,15 @@ import {
   Table, TableBody, TableCell,
   TableContainer,
   TableHead, TablePagination,
-  TableRow,
+  TableRow, Typography,
 } from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
-import './UserDashboard.css';
+import {Clear, Delete} from "@material-ui/icons";
+import './ListFoodEntries.css';
 import {useHistory} from "react-router-dom";
 import {ROUTES_LAYOUT} from "../../../../routes";
 import {FoodEntriesActions} from "../../../../store/food-entries/food-entries-actions";
+import {DatePicker} from "@material-ui/pickers";
+import {filterFoodEntries} from "../../../../helpers/mappers";
 
 export type ColumnId = 'id' | 'foodName' | 'price' | 'calories' | 'date';
 interface TableColumn {
@@ -36,11 +38,16 @@ const columns: Array<TableColumn> = [
 
 function ListFoodEntries() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [userContext] = useContext(UserContext);
   const isUser = checkUserType(userContext, UserType.USER);
   const isAdmin = checkUserType(userContext, UserType.ADMIN);
-
-  const dispatch = useDispatch();
+  const {data, loading, deleted} = useSelector((state: AppState) => state.foodEntries);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [foodEntries, setFoodEntries] = useState([]);
 
   useEffect(() => {
     if (isUser && userContext.user.id) {
@@ -50,20 +57,19 @@ function ListFoodEntries() {
     }
   }, [dispatch, isUser, userContext]);
 
-  const {data: foodEntries, loading, deleted} = useSelector((state: AppState) => state.foodEntries);
-
   useEffect(() => {
     if (deleted) {
       dispatch(FoodEntriesActions.loadFoodEntries());
     }
   }, [dispatch, deleted]);
 
+  useEffect(() => {
+    setFoodEntries(data);
+  }, [data]);
+
   const handleDelete = (foodEntryId: number) => {
     dispatch(FoodEntriesActions.deleteFoodEntry(foodEntryId));
   }
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -83,8 +89,77 @@ function ListFoodEntries() {
     }
   }
 
+  const handleSetStartDate = (date) => {
+    setStartDate(date);
+    setPage(0);
+    const filteredFoodEntries = filterFoodEntries(data, date, endDate);
+    setFoodEntries(filteredFoodEntries);
+  }
+
+  const handleSetEndDate = (date) => {
+    setEndDate(date);
+    setPage(0);
+    const filteredFoodEntries = filterFoodEntries(data, startDate, date);
+    setFoodEntries(filteredFoodEntries);
+  }
+
   return (
     <div className="w-full mt-8">
+      <div className="w-full my-4 flex flex-row justify-between">
+        <div className="flex items-center">
+          <div className="mr-4 h-fit">
+            <Typography variant="body2">
+              Start date
+            </Typography>
+          </div>
+          <DatePicker
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            value={startDate}
+            onChange={handleSetStartDate}
+          />
+          {
+            startDate && (
+              <div
+                className="p-2 cursor-pointer"
+                onClick={() => {
+                  handleSetStartDate(null);
+                }}>
+                <Clear/>
+              </div>
+            )
+          }
+        </div>
+        <div className="flex items-center">
+          <div className="mr-4 h-fit">
+            <Typography variant="body2">
+              End date
+            </Typography>
+          </div>
+          <DatePicker
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            value={endDate}
+            onChange={handleSetEndDate}
+          />
+          {
+            endDate && (
+              <div
+                className="p-2 cursor-pointer"
+                onClick={() => {
+                  handleSetEndDate(null);
+                }}>
+                <Clear/>
+              </div>
+            )
+          }
+        </div>
+      </div>
+
       {<LinearProgress style={{opacity: loading ? 1 : 0, marginBottom: 0}}/>}
       <Paper className={"w-full"}>
         <TableContainer className={"manage-users-table-container"}>

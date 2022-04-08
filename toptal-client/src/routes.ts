@@ -1,7 +1,7 @@
 // core components
 import VpnKey from "@material-ui/icons/VpnKey";
 import Login from "./components/pages/auth/login/Login";
-import ListFoodEntries from "./components/pages/user/dashboard/ListFoodEntries";
+import ListFoodEntries from "./components/pages/shared/list-food-entries/ListFoodEntries";
 import {UserType} from "./contexts/user-context";
 import Reporting from "./components/pages/admin/reporting/Reporting";
 import Register from "./components/pages/auth/register/Register";
@@ -110,7 +110,7 @@ export const userRoutes: Array<Route> = [
 export const adminRoutes = [
   {
     path: "/dashboard",
-    name: "Mange food entries",
+    name: "Manage food entries",
     icon: VpnKey,
     iconColor: "Info",
     component: ListFoodEntries,
