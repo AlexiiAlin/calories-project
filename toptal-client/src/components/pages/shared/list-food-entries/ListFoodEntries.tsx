@@ -6,7 +6,7 @@ import {AppState} from "../../../../store/app-state";
 import moment from "moment";
 import {
   LinearProgress,
-  Paper,
+  Paper, Snackbar,
   Table, TableBody, TableCell,
   TableContainer,
   TableHead, TablePagination,
@@ -19,6 +19,7 @@ import {ROUTES_LAYOUT} from "../../../../routes";
 import {FoodEntriesActions} from "../../../../store/food-entries/food-entries-actions";
 import {DatePicker} from "@material-ui/pickers";
 import {filterFoodEntries} from "../../../../helpers/mappers";
+import {Alert} from "@material-ui/lab";
 
 export type ColumnId = 'id' | 'foodName' | 'price' | 'calories' | 'date';
 interface TableColumn {
@@ -48,14 +49,16 @@ function ListFoodEntries() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [foodEntries, setFoodEntries] = useState([]);
+  const [snackBarOpened, setSnackBarOpened] = useState(false);
+  const [snackBarMessages, setSnackBarMessages] = useState([]);
 
   useEffect(() => {
     if (isUser && userContext.user.id) {
       dispatch(FoodEntriesActions.loadFoodEntries(userContext.user.id));
-    } else {
+    } else if (isAdmin) {
       dispatch(FoodEntriesActions.loadFoodEntries());
     }
-  }, [dispatch, isUser, userContext]);
+  }, [dispatch, isUser, isAdmin, userContext]);
 
   useEffect(() => {
     if (deleted) {
@@ -65,7 +68,44 @@ function ListFoodEntries() {
 
   useEffect(() => {
     setFoodEntries(data);
-  }, [data]);
+    if (isUser) {
+      const newSnackbarMessages = [];
+
+      const today = moment().startOf('day');
+      const todayFoodEntries = data.filter(foodEntry => {
+        return moment(foodEntry.date).startOf('day').diff(today) === 0;
+      });
+      const totalCaloriesForToday = todayFoodEntries.reduce((acc, el) => {
+        acc += el.calories;
+        return acc;
+      }, 0);
+      if (totalCaloriesForToday > userContext.user.caloriesLimit) {
+        newSnackbarMessages.push(
+          `You've reached your daily calories limit (${totalCaloriesForToday} calories instead of ${userContext.user.caloriesLimit})`
+        );
+      }
+
+      const startOfMonth = moment().startOf('month').startOf('day');
+      const monthFoodEntries = data.filter(foodEntry => {
+        return moment(foodEntry.date).startOf('month').startOf('day').diff(startOfMonth) === 0;
+      });
+
+      const totalPriceForMonth = monthFoodEntries.reduce((acc, el) => {
+        acc += el.price;
+        return acc;
+      }, 0);
+      if (totalPriceForMonth > userContext.user.monthlyLimit) {
+        newSnackbarMessages.push(
+          `You've reached your monthly price limit (${totalPriceForMonth}$ instead of ${userContext.user.monthlyLimit}$)`
+        );
+      }
+
+      if (newSnackbarMessages.length !== 0) {
+        setSnackBarMessages(newSnackbarMessages);
+        setSnackBarOpened(true)
+      }
+    }
+  }, [data, userContext, isUser]);
 
   const handleDelete = (foodEntryId: number) => {
     dispatch(FoodEntriesActions.deleteFoodEntry(foodEntryId));
@@ -249,6 +289,33 @@ function ListFoodEntries() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <Snackbar
+        open={snackBarOpened}
+        onClose={() => {
+          setSnackBarOpened(false);
+          setSnackBarMessages([]);
+        }}
+        autoHideDuration={10000}
+      >
+        <div className="flex flex-col">
+          {
+            snackBarMessages.map((snackBarMessage, idx) => {
+              return (
+                <Alert
+                  key={idx}
+                  className="mb-6"
+                  onClose={() => setSnackBarOpened(false)}
+                  severity={'warning'}
+                >
+                  {snackBarMessage}
+                </Alert>
+              )
+            })
+          }
+        </div>
+      </Snackbar>
+
     </div>
   );
 }

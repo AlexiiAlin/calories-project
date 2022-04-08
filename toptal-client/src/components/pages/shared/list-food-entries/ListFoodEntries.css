@@ -1,3 +1,8 @@
 .MuiTypography-h2 {
   margin-bottom: 0 !important;
 }
+
+.MuiAlert-icon {
+  display: flex;
+  align-items: center;
+}
