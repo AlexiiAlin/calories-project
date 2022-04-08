@@ -15,7 +15,7 @@ import AuthFooter from "./auth-footer/AuthFooter";
 
 const useStyles = makeStyles(componentStyles);
 
-const Auth = () => {
+const Auth = (props) => {
   const classes = useStyles();
   const mainContent = React.useRef(null);
   const location = useLocation();
