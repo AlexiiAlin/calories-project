@@ -10,14 +10,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
 import DirectionsRun from "@material-ui/icons/DirectionsRun";
-import EventNote from "@material-ui/icons/EventNote";
-import LiveHelp from "@material-ui/icons/LiveHelp";
 import Person from "@material-ui/icons/Person";
-import Settings from "@material-ui/icons/Settings";
 import {componentStyles} from "./navbar-dropdown";
-import {UserContext} from "../../../../contexts/user-context";
+import {UserContext, UserType} from "../../../../contexts/user-context";
 import {useHistory} from "react-router-dom";
 import {USER_TYPE_ROUTE} from "../../../../routes";
+import {checkUserType} from "../../../../helpers/utils";
 
 // core components
 
@@ -27,6 +25,7 @@ export default function NavbarDropdown() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [userContext] = useContext(UserContext);
+    const isUser = checkUserType(userContext, UserType.USER);
     const profileRoute = userContext && userContext.user && USER_TYPE_ROUTE[userContext.user.userType];
     const history = useHistory();
     const logout = () => userContext.logout(history);
@@ -59,62 +58,24 @@ export default function NavbarDropdown() {
             >
                 Welcome!
             </Typography>
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={() => {history.push(profileRoute + '/profile')}}
-            >
-                <Box
-                    component={Person}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>My profile</span>
-            </Box>
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={handleMenuClose}
-            >
-                <Box
-                    component={Settings}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>Settings</span>
-            </Box>
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={handleMenuClose}
-            >
-                <Box
-                    component={EventNote}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>Activity</span>
-            </Box>
-            <Box
-                display="flex!important"
-                alignItems="center!important"
-                component={MenuItem}
-                onClick={handleMenuClose}
-            >
-                <Box
-                    component={LiveHelp}
-                    width="1.25rem!important"
-                    height="1.25rem!important"
-                    marginRight="1rem"
-                />
-                <span>Support</span>
-            </Box>
+            {
+                isUser && (
+                  <Box
+                    display="flex!important"
+                    alignItems="center!important"
+                    component={MenuItem}
+                    onClick={() => {history.push(profileRoute + '/profile')}}
+                  >
+                      <Box
+                        component={Person}
+                        width="1.25rem!important"
+                        height="1.25rem!important"
+                        marginRight="1rem"
+                      />
+                      <span>My profile</span>
+                  </Box>
+                )
+            }
             <Divider component="div" classes={{ root: classes.dividerRoot }} />
             <Box
                 display="flex!important"

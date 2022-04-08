@@ -68,7 +68,7 @@ const GenericLayout = (props: GenericLayoutProps) => {
               logo={{
                 innerLink: props.routeLayout + "/dashboard",
                 imgAlt: "...",
-                imgSrc: process.env.PUBLIC_URL + '/images/common/datamed-logo.png'
+                imgSrc: process.env.PUBLIC_URL + '/images/common/toptal.png'
               }}
               dropdown={<NavbarDropdown />}
               input={

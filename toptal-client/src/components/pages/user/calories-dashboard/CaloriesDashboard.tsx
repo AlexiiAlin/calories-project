@@ -39,14 +39,12 @@ function CaloriesDashboard(props) {
         }
       })
       .sort((fe1, fe2) => sortByDatesFn(fe1.date, fe2.date));
-    console.log('foodEntries by day: ', foodEntriesByDay);
     return mapFoodEntriesToData(foodEntriesByDay);
   }, [foodEntries]);
 
 
   useEffect(() => {
     if (foodEntries.length > 0) {
-      console.log('Agregated FE: ', aggregatedFoodEntries);
       const caloriesSeries = mapFoodEntriesToSeries(aggregatedFoodEntries);
       const categories = mapFoodEntriesToXAxisCategories(aggregatedFoodEntries);
       const userName = userState && userState.user && userState.user.name && `User name: ${userState.user.name}`;

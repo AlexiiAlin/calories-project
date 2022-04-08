@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import {useLocation, Route, Switch, Redirect, useHistory} from "react-router-dom";
+import React from "react";
+import {useLocation, Route, Switch, Redirect} from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -9,35 +9,13 @@ import Grid from "@material-ui/core/Grid";
 // core components
 import componentStyles from "./auth";
 import AuthNavbar from "./auth-navbar/AuthNavbar";
-import {routes, ROUTES_LAYOUT} from "../../routes";
+import {routes} from "../../routes";
 import AuthHeader from "./auth-header/AuthHeader";
 import AuthFooter from "./auth-footer/AuthFooter";
-import initializeUserContextData from "../../hooks/user-hooks";
-import {UserContext, UserType} from "../../contexts/user-context";
 
 const useStyles = makeStyles(componentStyles);
 
-const Auth = (props) => {
-  const [userContext] = useContext(UserContext);
-  const history = useHistory();
-  if (history.location.pathname !== "/auth/register") {
-    initializeUserContextData();
-  }
-  if (userContext.user) {
-    switch (userContext.user.userType) {
-      case UserType.USER: {
-        history.push(ROUTES_LAYOUT.USER + '/dashboard');
-        break;
-      }
-      case UserType.ADMIN: {
-        history.push(ROUTES_LAYOUT.ADMIN + '/dashboard')
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
+const Auth = () => {
   const classes = useStyles();
   const mainContent = React.useRef(null);
   const location = useLocation();

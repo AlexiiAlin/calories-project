@@ -173,8 +173,6 @@ function Reporting() {
     }
   }
 
-  console.log('report: ', report);
-
   return (
     <div className="w-full mt-8">
       <div className="mb-4">

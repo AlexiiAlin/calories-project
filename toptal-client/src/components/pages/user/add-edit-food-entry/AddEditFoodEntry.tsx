@@ -17,7 +17,7 @@ interface AddEditFoodEntryProps extends RouteProps {
 
 function AddEditFoodEntry(props: AddEditFoodEntryProps) {
   // Initialise
-  const foodEntry = props.location.state as FoodEntry;
+  const [foodEntry, setFoodEntry] = useState<FoodEntry>(null)
   const [userContext] = useContext(UserContext);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -43,6 +43,11 @@ function AddEditFoodEntry(props: AddEditFoodEntryProps) {
     setPrice(foodEntry.price);
     setDate(new Date(foodEntry.date));
   }, [foodEntry]);
+
+  useEffect(() => {
+    console.log('set again: ', props.location.state);
+    setFoodEntry(props.location.state);
+  }, [props.location.state])
 
   const deleteButton = (
     <div className="mr-4 ">

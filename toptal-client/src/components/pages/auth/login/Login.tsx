@@ -20,6 +20,7 @@ import {UserContext, UserType} from "../../../../contexts/user-context";
 import {useHistory} from "react-router-dom";
 import {ROUTES_LAYOUT} from "../../../../routes";
 import {useForm} from "react-hook-form";
+import initializeUserContextData from "../../../../hooks/user-hooks";
 
 // core components
 
@@ -38,6 +39,7 @@ function Login() {
   const classes = useStyles();
   const theme = useTheme();
   const [userContext, setUserContext] = useContext(UserContext);
+  initializeUserContextData();
 
   const onSubmit = handleSubmit((data) => {
     const {email, password} = data;

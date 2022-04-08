@@ -132,7 +132,7 @@ export default function AuthNavbar() {
                   alt="..."
                   height="30px"
                   component="img"
-                  src={process.env.PUBLIC_URL + '/images/common/datamed-logo.png'}
+                  src={process.env.PUBLIC_URL + '/images/common/toptal.png'}
                   className={classes.headerImg}
                   style={{visibility: 'hidden'}}
               />

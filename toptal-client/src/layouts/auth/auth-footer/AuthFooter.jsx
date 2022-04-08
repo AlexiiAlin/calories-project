@@ -36,7 +36,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   target="_blank"
               >
-                Datamed
+                Toptal
               </a>
             </div>
           </Grid>
@@ -74,7 +74,7 @@ const Footer = () => {
                     root: classes.listItemRoot,
                   }}
               >
-                Datamed
+                Toptal
               </ListItem>
             </Box>
           </Grid>
