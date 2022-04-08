@@ -1,24 +1,31 @@
-import React, {useEffect, useState} from 'react';
-import {UserInfo, UserType} from "../../../../contexts/user-context";
+import React, {useContext, useEffect, useState} from 'react';
+import {UserContext, UserInfo, UserType} from "../../../../contexts/user-context";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../../../store/app-state";
 import {
   CircularProgress,
   FormControl,
-  Input, LinearProgress, MenuItem,
-  Paper, Select,
+  Input,
+  LinearProgress,
+  MenuItem,
+  Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow, Typography
+  TableRow,
+  Typography
 } from "@material-ui/core";
 import './Reporting.css';
 import {UsersActions} from "../../../../store/users/users-actions";
 import {ReportingActions} from "../../../../store/reporting/reporting-actions";
 import {GeneralRow} from "../../../shared/general-row/GeneralRow";
+import {checkUserType} from "../../../../helpers/utils";
+import {useHistory} from "react-router-dom";
+import {ROUTES_LAYOUT} from "../../../../routes";
 
 export type ColumnId = 'id' | 'name' | 'email' | 'userType' | 'avgCalories';
 
@@ -69,6 +76,15 @@ function Reporting() {
   const [isEditing, setIsEditing] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [userContext] = useContext(UserContext);
+  const history = useHistory();
+  const isUser = checkUserType(userContext, UserType.USER);
+
+  useEffect(() => {
+    if (isUser) {
+      history.push(ROUTES_LAYOUT.USER + '/dashboard');
+    }
+  }, [isUser, history])
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -96,7 +112,7 @@ function Reporting() {
     setIsEditing(true);
     if (changedColumn && changedColumn !== columnId && !usersAreEqual(user, getUserById(rows, user.id))) {
       setUser(user);
-      dispatch(UsersActions.editUser(user));
+      dispatch(UsersActions.editUser({...user, omitPassword: true}));
     }
     if (user && user.id === row.id) {
       setUser({...user, [columnId]: row[columnId]});
@@ -108,7 +124,7 @@ function Reporting() {
 
   const handleKeyPress = (ev) => {
     if(ev.key === 'Enter') {
-      dispatch(UsersActions.editUser(user));
+      dispatch(UsersActions.editUser({...user, omitPassword: true}));
       setIsEditing(false);
     }
   }
@@ -146,7 +162,7 @@ function Reporting() {
                   onChange={((ev) => {
                     const newUser = {...user,  [column.id]: ev.target.value};
                     setUser(newUser);
-                    dispatch(UsersActions.editUser(newUser));
+                    dispatch(UsersActions.editUser({...newUser, omitPassword: true}));
                   })}
                 >
                   {

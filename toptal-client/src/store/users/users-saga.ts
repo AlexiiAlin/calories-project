@@ -37,6 +37,10 @@ function* editUser(action: IAction) {
   try {
     yield delay(DELAY_MS);
     delete action.payload.avgCalories;
+    if (action.payload.omitPassword) {
+      delete action.payload.password;
+      delete action.payload.omitPassword;
+    }
     yield call(axiosInstance.put, `users/${action.payload.id}`, sanitiseObject(action.payload));
     yield put(UsersActions.editUserSuccess());
     yield put(UsersActions.loadUsers());

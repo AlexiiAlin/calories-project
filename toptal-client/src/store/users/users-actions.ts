@@ -53,7 +53,7 @@ export class UsersActions {
     }
   }
 
-  static editUser(user: Partial<UserInfo>) {
+  static editUser(user: Partial<UserInfo | {omitPassword: boolean}>) {
     return {
       type: USERS_ACTION_TYPES.EDIT_START,
       payload: user
