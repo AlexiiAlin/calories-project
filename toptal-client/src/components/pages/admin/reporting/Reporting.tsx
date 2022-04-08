@@ -3,6 +3,7 @@ import {UserInfo, UserType} from "../../../../contexts/user-context";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../../../store/app-state";
 import {
+  CircularProgress,
   FormControl,
   Input, LinearProgress, MenuItem,
   Paper, Select,
@@ -12,12 +13,14 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow
+  TableRow, Typography
 } from "@material-ui/core";
-import './ManageUsers.css';
+import './Reporting.css';
 import {UsersActions} from "../../../../store/users/users-actions";
+import {ReportingActions} from "../../../../store/reporting/reporting-actions";
+import {GeneralRow} from "../../../shared/general-row/GeneralRow";
 
-export type ColumnId = 'id' | 'name' | 'email' | 'userType';
+export type ColumnId = 'id' | 'name' | 'email' | 'userType' | 'avgCalories';
 
 export interface TableColumn {
   id: ColumnId;
@@ -48,6 +51,7 @@ const columns: Array<TableColumn> = [
   { id: 'name', label: 'Name', minWidth: 170, align: 'left' },
   { id: 'email', label: 'Email', minWidth: 170, align: 'left' },
   { id: 'userType', label: 'User Type', minWidth: 170, align: 'left', format: (value) => USER_TYPE_LABEL[value] },
+  { id: 'avgCalories', label: 'Avg calories (last 7 days)', minWidth: 220, align: 'left' },
 ];
 
 const usersAreEqual = (user1, user2) => {
@@ -58,17 +62,19 @@ const getUserById = (users: Array<UserInfo>, userId: string) => {
   return users.filter(user => user.id === userId)[0];
 }
 
-function ManageUsers() {
+function Reporting() {
   const {data: rows, loading} = useSelector((state: AppState) => state.users);
+  const {data: report, loading: reportLoading} = useSelector((state: AppState) => state.reporting);
   const [user, setUser] = useState<UserInfo>(null);
   const [changedColumn, setChangedColumn] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(UsersActions.loadUsers());
+    dispatch(ReportingActions.loadReporting())
   }, [dispatch]);
 
   useEffect(() => {
@@ -167,8 +173,15 @@ function ManageUsers() {
     }
   }
 
+  console.log('report: ', report);
+
   return (
     <div className="w-full mt-8">
+      <div className="mb-4">
+        <Typography variant="h2">
+          Reporting
+        </Typography>
+      </div>
       {<LinearProgress style={{opacity: loading ? 1 : 0, marginBottom: 0}}/>}
       <Paper className={"w-full"}>
         <TableContainer className={"manage-users-table-container"}>
@@ -208,7 +221,7 @@ function ManageUsers() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[5, 10, 25]}
           component={'div'}
           count={rows.length}
           rowsPerPage={rowsPerPage}
@@ -217,8 +230,23 @@ function ManageUsers() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <div className="mt-10 mb-2">
+        <Typography variant="h3">
+          Added entries
+        </Typography>
+      </div>
+      {reportLoading && <CircularProgress/>}
+      {
+        !reportLoading && (
+          <>
+            <GeneralRow label={'Last 7 days'} value={report['7-days']}/>
+            <GeneralRow label={'Week before 7 days'} value={report['14-days']}/>
+          </>
+        )
+      }
     </div>
   );
 }
 
-export default ManageUsers;
+export default Reporting;

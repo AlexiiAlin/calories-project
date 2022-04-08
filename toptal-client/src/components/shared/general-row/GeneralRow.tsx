@@ -1,5 +1,6 @@
 import {Typography} from "@material-ui/core";
 import React from "react";
+import {isNullOrUndefined} from "../../../helpers/utils";
 
 interface GeneralTextRowProps {
   label: string;
@@ -9,7 +10,7 @@ interface GeneralTextRowProps {
 
 export const GeneralRow = (props: GeneralTextRowProps) => {
   const {label, value, noMarginBottom} = props;
-  return (value &&
+  return (!isNullOrUndefined(value) &&
     <div className={`general-row ${!noMarginBottom && 'mb-1'}`}>
       <div className="general-label">
         <Typography variant="caption">

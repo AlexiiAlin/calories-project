@@ -4,6 +4,7 @@ import { HttpException } from '@exceptions/HttpException';
 import { FoodEntries } from '@interfaces/foodEntries.interface';
 import { CreateFoodEntryDto, UpdateFoodEntryDto } from '@dtos/foodEntries.dto';
 import { FoodEntriesEntity } from '@entity/foodEntries.entity';
+import moment from 'moment';
 
 class FoodEntryService {
   public foodEntries = FoodEntriesEntity;
@@ -56,6 +57,22 @@ class FoodEntryService {
     if (isEmpty(foodEntryId)) throw new HttpException(400, 'No food entry given');
     const foodEntriesRepository = getRepository(this.foodEntries);
     return await foodEntriesRepository.delete({ id: foodEntryId });
+  }
+
+  public async foodEntriesReporting(): Promise<any> {
+    const foodEntriesRepository = getRepository(this.foodEntries);
+    const foodEntries = await foodEntriesRepository.find();
+    const now = moment().endOf('day');
+    const date7DaysAgo = moment().subtract(7, 'd').startOf('day');
+    const date14DaysGo = moment().subtract(14, 'd').startOf('day');
+    return {
+      '7-days': foodEntries.filter(foodEntry => {
+        return moment(foodEntry.date).isBetween(date7DaysAgo, now);
+      }).length,
+      '14-days': foodEntries.filter(foodEntry => {
+        return moment(foodEntry.date).isBetween(date14DaysGo, date7DaysAgo);
+      }).length,
+    };
   }
 }
 

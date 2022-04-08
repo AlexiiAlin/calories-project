@@ -3,15 +3,62 @@ import { getRepository, Not } from 'typeorm';
 import { CreateUserDto, EditUserDto } from '@dtos/users.dto';
 import { UserEntity } from '@entity/users.entity';
 import { HttpException } from '@exceptions/HttpException';
-import { User } from '@interfaces/users.interface';
+import { User, UserType } from '@interfaces/users.interface';
 import { isEmpty } from '@utils/util';
+import moment from 'moment';
 
 class UserService {
   public users = UserEntity;
 
   public async findAllUser(): Promise<User[]> {
     const userRepository = getRepository(this.users);
-    return await userRepository.find();
+    const users = await userRepository.find({
+      relations: ['foodEntries'],
+    });
+
+    const format = 'DD-MM-YYYY';
+    const yesterdayEnd = moment().subtract(1, 'd').endOf('day');
+    const date7DaysAgo = moment().subtract(7, 'd').startOf('day');
+    const perDayObj = {};
+    const daysBetween = yesterdayEnd.diff(date7DaysAgo, 'days') + 1;
+    for (let i = 0; i < daysBetween; i++) {
+      const endDate = moment(yesterdayEnd);
+      const day = endDate.subtract(i, 'd').format(format);
+      perDayObj[day] = 0;
+    }
+
+    return users.map(user => {
+      if (user.userType === UserType.ADMIN) {
+        delete user.foodEntries;
+        return {
+          ...user,
+          avgCalories: 'N/A',
+        };
+      }
+
+      const caloriesPerDay = user.foodEntries
+        .filter(foodEntry => {
+          return moment(foodEntry.date).isBetween(date7DaysAgo, yesterdayEnd);
+        })
+        .reduce((acc, foodEntry) => {
+          const key = moment(foodEntry.date).format(format);
+          if (acc[key] === null || acc[key] === undefined) {
+            acc[key] = foodEntry.calories;
+          }
+          acc[key] += foodEntry.calories;
+          return acc;
+        }, Object.assign({}, perDayObj));
+      const totalCalories = Object.keys(caloriesPerDay).reduce((acc, key) => {
+        acc += caloriesPerDay[key];
+        return acc;
+      }, 0);
+
+      delete user.foodEntries;
+      return {
+        ...user,
+        avgCalories: Math.floor(totalCalories / Object.keys(caloriesPerDay).length),
+      };
+    });
   }
 
   public async findUserById(userId: number): Promise<User> {

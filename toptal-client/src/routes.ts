@@ -3,7 +3,7 @@ import VpnKey from "@material-ui/icons/VpnKey";
 import Login from "./components/pages/auth/login/Login";
 import ListFoodEntries from "./components/pages/user/dashboard/ListFoodEntries";
 import {UserType} from "./contexts/user-context";
-import ManageUsers from "./components/pages/admin/manage-users/ManageUsers";
+import Reporting from "./components/pages/admin/reporting/Reporting";
 import Register from "./components/pages/auth/register/Register";
 import UserProfile from "./components/pages/user/profile/UserProfile";
 import AddEditInfo from "./components/pages/user/add-edit-info/AddEditInfo";
@@ -118,15 +118,6 @@ export const adminRoutes = [
     roles: [UserType.ADMIN]
   },
   {
-    path: "/manage-users",
-    name: "Manage users",
-    icon: VpnKey,
-    iconColor: "Info",
-    component: ManageUsers,
-    layout: ROUTES_LAYOUT.ADMIN,
-    roles: [UserType.ADMIN]
-  },
-  {
     path: "/add-food-entry",
     name: "Add food entry",
     icon: VpnKey,
@@ -142,6 +133,15 @@ export const adminRoutes = [
     iconColor: "Info",
     component: AddEditFoodEntry,
     hideFromSidebar: true,
+    layout: ROUTES_LAYOUT.ADMIN,
+    roles: [UserType.ADMIN]
+  },
+  {
+    path: "/reporting",
+    name: "Reporting",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: Reporting,
     layout: ROUTES_LAYOUT.ADMIN,
     roles: [UserType.ADMIN]
   },

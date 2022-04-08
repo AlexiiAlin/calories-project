@@ -14,6 +14,7 @@ export interface UserInfo {
   caloriesLimit: number;
   monthlyLimit: number;
   userType: UserType;
+  avgCalories?: number;
 }
 
 export enum UserType {

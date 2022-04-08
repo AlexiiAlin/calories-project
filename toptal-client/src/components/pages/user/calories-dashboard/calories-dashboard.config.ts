@@ -2,7 +2,7 @@ import Highcharts from "highcharts";
 
 export const highchartsOptions: Highcharts.Options = {
   title: {
-    text: 'Medical history'
+    text: 'Calories dashboard'
   },
   subtitle: {
     text: ''

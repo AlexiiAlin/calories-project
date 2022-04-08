@@ -26,12 +26,22 @@ function CaloriesDashboard(props) {
   const [options, setOptions] = useState(highchartsOptions);
 
   const aggregatedFoodEntries = useMemo(() => {
-    const foodEntriesByDay = foodEntries.map(foodEntry => {
-      return {
-        ...foodEntry,
-        date: moment(foodEntry.date).format('DD MMM YYYY')
-      }
-    });
+    const foodEntriesByDay = foodEntries
+      .map(foodEntry => {
+        return {
+          ...foodEntry,
+          date: moment(foodEntry.date).format('DD MMM YYYY')
+        }
+      })
+      .sort((fe1, fe2) => {
+        const diff = moment(fe1.date).diff(moment(fe2.date));
+        if (diff > 0) {
+          return 1;
+        } else if (diff < 0) {
+          return -1;
+        }
+        return 0;
+      });
 
     return mapFoodEntriesToData(foodEntriesByDay);
   }, [foodEntries])
@@ -39,15 +49,15 @@ function CaloriesDashboard(props) {
 
   useEffect(() => {
     if (foodEntries.length > 0) {
-      const series = mapFoodEntriesToSeries(aggregatedFoodEntries);
+      const caloriesSeries = mapFoodEntriesToSeries(aggregatedFoodEntries);
       const categories = mapFoodEntriesToXAxisCategories(aggregatedFoodEntries);
       const userName = userState && userState.user && userState.user.name && `User name: ${userState.user.name}`;
 
-      console.log('series: ', series);
+      console.log('series: ', caloriesSeries);
       setOptions({
         ...highchartsOptions,
         series: [
-          series, {
+          caloriesSeries, {
             name: 'Daily limit',
             data: mapFoodEntriesToRangeSeries(
               aggregatedFoodEntries,
