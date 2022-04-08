@@ -31,7 +31,6 @@ export interface TableColumn {
 }
 
 const USER_TYPE_LABEL = {
-  [UserType.NONE]: 'None',
   [UserType.USER]: 'User',
   [UserType.ADMIN]: 'Admin',
 };
