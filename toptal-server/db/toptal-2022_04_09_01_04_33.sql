@@ -1,0 +1,87 @@
+-- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: toptal
+-- ------------------------------------------------------
+-- Server version	8.0.28-0ubuntu0.20.04.3
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `foodEntries`
+--
+
+DROP TABLE IF EXISTS `foodEntries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `foodEntries` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `userId` char(36) NOT NULL,
+  `price` int NOT NULL,
+  `calories` int NOT NULL,
+  `foodName` varchar(255) NOT NULL,
+  `date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  KEY `FK_4902b440acc13a6e648ea4025f9` (`userId`),
+  CONSTRAINT `FK_4902b440acc13a6e648ea4025f9` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `foodEntries`
+--
+
+LOCK TABLES `foodEntries` WRITE;
+/*!40000 ALTER TABLE `foodEntries` DISABLE KEYS */;
+INSERT INTO `foodEntries` VALUES (5,'4cefaa9d-1a3a-4da6-b365-fb3f61b48223',30,300,'Mango','2022-04-07 15:23:44.322000'),(9,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',50,400,'Banana','2022-04-06 10:05:00.000000'),(10,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',200,500,'Soup','2022-04-06 12:05:00.000000'),(11,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',700,1000,'Hamburger','2022-04-06 14:05:00.000000'),(12,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',100,500,'Fries','2022-04-06 17:06:00.000000'),(13,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',300,200,'Cereal Milk','2022-04-05 10:06:00.000000'),(14,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',200,700,'Pizza','2022-04-05 13:06:00.000000'),(15,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',400,500,'Meatballs','2022-04-05 14:06:00.000000'),(16,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',100,400,'Salad','2022-04-05 17:06:00.000000'),(17,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',50,600,'Biscuits','2022-04-06 17:47:00.000000'),(33,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',30,200,'Tea','2022-04-04 10:06:00.000000'),(34,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',400,1000,'Shaworma','2022-04-04 10:06:00.000000'),(35,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',10,700,'Pasta','2022-04-04 10:06:00.000000'),(36,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',90,800,'Pizza','2022-04-04 10:06:00.000000'),(37,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',130,300,'Salad','2022-04-03 10:06:00.000000'),(38,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',60,100,'Noodles','2022-04-03 10:06:00.000000'),(39,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',80,400,'Cake','2022-04-03 10:06:00.000000'),(40,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',200,100,'Tea','2022-04-03 10:06:00.000000'),(41,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',140,500,'Sushi','2022-04-02 10:06:00.000000'),(42,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',120,600,'Tacos','2022-04-02 10:06:00.000000'),(43,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',100,400,'Humus','2022-04-02 10:06:00.000000'),(44,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',120,900,'Snitzel','2022-04-02 10:06:00.000000'),(45,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',90,600,'Wurst','2022-04-02 10:06:00.000000'),(46,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',50,600,'Cookies','2022-04-01 10:06:00.000000'),(47,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',100,1000,'Cheeseburger','2022-04-01 10:06:00.000000'),(48,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',90,100,'Coke','2022-04-01 10:06:00.000000'),(49,'4cefaa9d-1a3a-4da6-b365-fb2f61b48223',20,300,'Banana','2022-04-08 15:47:57.761000'),(50,'4cefaa9d-1a3a-4da6-b365-fb2f61b48223',100,800,'Hamburger','2022-04-07 12:00:00.000000'),(51,'4cefaa9d-1a3a-4da6-b365-fb2f61b48223',80,750,'Pizza','2022-04-01 15:48:00.000000'),(52,'4cefaa9d-1a3a-4da6-b365-fb2f61b48223',100,900,'Pasta','2022-03-31 15:48:00.000000'),(53,'c99456e9-2822-4e57-86a7-4ef5536cb6be',5,100,'Orange','2022-03-17 16:26:00.000000'),(54,'c99456e9-2822-4e57-86a7-4ef5536cb6be',10,300,'Banana','2022-04-08 16:27:06.090000'),(55,'c99456e9-2822-4e57-86a7-4ef5536cb6be',5,350,'Potato','2022-04-07 16:47:00.000000'),(56,'c99456e9-2822-4e57-86a7-4ef5536cb6be',100,600,'Noodles','2022-04-01 16:48:00.000000'),(57,'4cefaa9d-1a3a-4da6-b365-fb3f61b48223',5,100,'Apple','2022-04-05 17:14:00.000000'),(59,'11512c26-55a8-4a7f-8cb2-e96d7dc497f2',100,600,'Steak','2022-04-08 18:08:42.134000'),(66,'4cefaa9d-1a3a-4da6-b365-fb2f61b48223',200,700,'Pizza','2022-04-09 00:20:36.595000'),(67,'d5c60fa9-1959-4cf6-ad45-287c24381420',100,600,'Burger','2022-04-09 00:27:21.282000'),(70,'9bf8fe04-e066-46c6-ab19-ada91d69d622',100,800,'Burger','2022-04-09 00:42:07.863000'),(71,'9bf8fe04-e066-46c6-ab19-ada91d69d622',50,300,'Soup','2022-04-08 00:42:00.000000'),(72,'9bf8fe04-e066-46c6-ab19-ada91d69d622',20,100,'Fries','2022-04-07 00:42:00.000000'),(74,'9bf8fe04-e066-46c6-ab19-ada91d69d622',300,100,'Apple','2022-04-08 00:43:00.000000'),(75,'9bf8fe04-e066-46c6-ab19-ada91d69d622',50,100,'Soup','2022-04-04 00:45:00.000000'),(77,'65f38e76-5aff-4339-99a6-5e915e44dac0',50,300,'Salad','2022-04-08 00:51:00.000000'),(78,'65f38e76-5aff-4339-99a6-5e915e44dac0',80,600,'Fries','2022-04-04 00:52:00.000000'),(79,'4cefaa9d-1a3a-4da6-b365-fb3f61b48223',100,1200,'Noodles','2022-04-09 00:52:35.965000'),(80,'65f38e76-5aff-4339-99a6-5e915e44dac0',700,100,'Fine dining food','2022-04-08 00:54:00.000000'),(81,'65f38e76-5aff-4339-99a6-5e915e44dac0',100,800,'Cheeseburger','2022-04-09 00:54:37.446000'),(82,'a4102663-fa16-4c2d-a719-feaa4eb910aa',200,1000,'Burger','2022-04-09 00:56:30.469000'),(84,'a4102663-fa16-4c2d-a719-feaa4eb910aa',100,300,'Salad','2022-04-05 00:56:00.000000'),(85,'a4102663-fa16-4c2d-a719-feaa4eb910aa',900,100,'Fine dining food','2022-04-07 00:57:00.000000');
+/*!40000 ALTER TABLE `foodEntries` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` char(36) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `userType` int NOT NULL DEFAULT '1',
+  `caloriesLimit` int NOT NULL DEFAULT '2100',
+  `monthlyLimit` int NOT NULL DEFAULT '1000',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_97672ac88f789774dd47f7c8be` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('11512c26-55a8-4a7f-8cb2-e96d7dc497f2','alexiialin96@gmail.com','Alin Alexii','$2b$10$WoOHAKxcU8mb3k7dwh8mROuQ8ZtjR5V04xdU21W6FITR798ioW2BW',1,1500,1000),('4cefaa9d-1a3a-4da6-b365-fb2f61b48223','andreea@gmail.com','Andreea','$2b$10$En88aPkoaZJHqPcaeRCiXO4G4louT5bDTeUwKPPc65CFkTGWnRiOm',1,2100,1000),('4cefaa9d-1a3a-4da6-b365-fb3f61b48223','admin@gmail.com','Admin','$2b$10$En88aPkoaZJHqPcaeRCiXO4G4louT5bDTeUwKPPc65CFkTGWnRiOm',2,0,0),('65f38e76-5aff-4339-99a6-5e915e44dac0','sarah@gmail.com','Sarah','$2b$10$DZmlH1AZUXX7PD6hSMoF0OFAFSsrjP7/0I0rL75qoTOkKdD0m5IZa',1,1700,1000),('9bf8fe04-e066-46c6-ab19-ada91d69d622','adele@gmail.com','Adele','$2b$10$IQc0KJogdUvSS39YvmMUeeDjTkYK5aL4dBRcKw7Ji.44y3LsXmBWa',1,1000,1000),('a4102663-fa16-4c2d-a719-feaa4eb910aa','sam@gmail.com','Sam','$2b$10$xXgWR0NwRmzfMGpded1D0OapAGrVKDyae.r19czFy9Na0icCxN14W',1,1800,1000),('c99456e9-2822-4e57-86a7-4ef5536cb6be','george@gmail.com','George','$2b$10$ThN8lf9aIQ3F8zIKtihb6eO2EGutTbQ/lxrpLTyJfOY37E8pCw06u',1,2100,1000),('d5c60fa9-1959-4cf6-ad45-287c24381420','johnny@gmail.com','Johnny Test','$2b$10$zgayF8xiDPG5lnRZM2M0rONBphmEVSeC/sBE8CPrn.VFdDkpI2FAa',1,2100,1000);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-09  1:04:33

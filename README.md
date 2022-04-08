@@ -1,26 +1,38 @@
 # Toptal calories project
 
-**How to start the project:**
+**Prerequisites:**
 
-`1. Use node 14.18`
+`1. Install/use node 14.18`
 
 `2. Clone the project`
 
+`3. Install mysql server`
+
+`4. Create a schema/database named "toptal"`
+
+    username: root | password: root
+
+`5. Run the sql file located inside ./toptal-server/db [optional]`
+
+<hr/>
+
 **Terminal 1:**
 
-`3. cd ./toptal-server`
+`1. cd ./toptal-server`
 
-`4. npm install`
+`2. npm install`
 
-`5. create a .env file, with content: "PORT=3200"`
+`3. create a .env file, with content: "PORT=3200"`
 
-`6. npm run dev`
+`4. npm run dev`
+
+<hr/>
 
 **Terminal 2:**
 
-`7. cd ./toptal-client`
+`1. cd ./toptal-client`
 
-`8. npm install`
+`2. npm install`
 
-`9. npm run start`
+`3. npm run start`
 
