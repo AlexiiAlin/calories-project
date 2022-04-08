@@ -24,16 +24,19 @@ function AddEditFoodEntry(props: AddEditFoodEntryProps) {
   const isAdmin = checkUserType(userContext, UserType.ADMIN);
 
   const {created, edited, deleted, loading} = useSelector((state: AppState) => state.foodEntries);
-  if (created || edited || deleted) {
-    dispatch(FoodEntriesActions.resetState());
-    history.push(ROUTES_LAYOUT.USER + '/dashboard');
-  }
+
+  useEffect(() => {
+    if (created || edited || deleted) {
+      dispatch(FoodEntriesActions.resetState());
+      history.push(ROUTES_LAYOUT.USER + '/dashboard');
+    }
+  }, [created, edited, deleted, dispatch, history])
 
   // React State
   const [foodName, setFoodName] = useState('');
   const [calories, setCalories] = useState(0);
   const [price, setPrice] = useState(0);
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(new Date());
 
   // React state: autofill for edit scenario
   useEffect(() => {
@@ -45,7 +48,6 @@ function AddEditFoodEntry(props: AddEditFoodEntryProps) {
   }, [foodEntry]);
 
   useEffect(() => {
-    console.log('set again: ', props.location.state);
     setFoodEntry(props.location.state);
   }, [props.location.state])
 

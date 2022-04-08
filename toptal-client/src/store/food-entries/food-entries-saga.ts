@@ -3,6 +3,7 @@ import axiosInstance from "../../helpers/axios-base";
 import {IAction} from "../interfaces";
 import {sanitiseObject} from "../../helpers/utils";
 import {FOOD_ENTRIES_ACTION_TYPES, FoodEntriesActions} from "./food-entries-actions";
+import {DELAY_MS} from "../sagas";
 
 export function* foodEntriesSaga() {
   yield all([
@@ -14,16 +15,20 @@ export function* foodEntriesSaga() {
 }
 
 function* loadFoodEntries(action: IAction) {
-  yield delay(1000);
-  const loadUsersFoodEntries = Boolean(action.payload);
-  const url = loadUsersFoodEntries ? `food-entries/?userId=${action.payload}` : 'food-entries';
-  const result = yield call(axiosInstance.get, url);
-  yield put(FoodEntriesActions.loadFoodEntriesSuccess(result.data));
+  try {
+    yield delay(DELAY_MS);
+    const loadUsersFoodEntries = Boolean(action.payload);
+    const url = loadUsersFoodEntries ? `food-entries/?userId=${action.payload}` : 'food-entries';
+    const result = yield call(axiosInstance.get, url);
+    yield put(FoodEntriesActions.loadFoodEntriesSuccess(result.data));
+  } catch (e) {
+    yield put(FoodEntriesActions.loadFoodEntriesFailed(e));
+  }
 }
 
 function* createFoodEntry(action: IAction) {
   try {
-    yield delay(1000);
+    yield delay(DELAY_MS);
     yield call(axiosInstance.post, `food-entries`, sanitiseObject(action.payload));
     yield put(FoodEntriesActions.createFoodEntrySuccess());
   } catch (e) {
@@ -33,7 +38,7 @@ function* createFoodEntry(action: IAction) {
 
 function* editFoodEntry(action: IAction) {
   try {
-    yield delay(1000);
+    yield delay(DELAY_MS);
     yield call(axiosInstance.put, `food-entries/${action.payload.id}`, sanitiseObject(action.payload));
     yield put(FoodEntriesActions.editFoodEntrySuccess());
   } catch (e) {
@@ -44,7 +49,7 @@ function* editFoodEntry(action: IAction) {
 
 function* deleteFoodEntry(action: IAction) {
   try {
-    yield delay(1000);
+    yield delay(DELAY_MS);
     yield call(axiosInstance.delete, `food-entries/${action.payload}`);
     yield put(FoodEntriesActions.deleteFoodEntrySuccess());
   } catch (e) {

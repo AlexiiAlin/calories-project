@@ -3,6 +3,7 @@ import axiosInstance from "../../helpers/axios-base";
 import {USERS_ACTION_TYPES, UsersActions} from "./users-actions";
 import {IAction} from "../interfaces";
 import {sanitiseObject} from "../../helpers/utils";
+import {DELAY_MS} from "../sagas";
 
 export function* usersSaga() {
   yield all([
@@ -14,9 +15,13 @@ export function* usersSaga() {
 }
 
 function* loadUsers() {
-  const result = yield call(axiosInstance.get, 'users');
-  yield delay(1000);
-  yield put(UsersActions.loadUsersSuccess(result.data));
+  try {
+    const result = yield call(axiosInstance.get, 'users');
+    yield delay(DELAY_MS);
+    yield put(UsersActions.loadUsersSuccess(result.data));
+  } catch (e) {
+    yield put(UsersActions.loadUsersFailed(e));
+  }
 }
 
 function* createUser(action: IAction) {
@@ -30,7 +35,7 @@ function* createUser(action: IAction) {
 
 function* editUser(action: IAction) {
   try {
-    yield delay(1000);
+    yield delay(DELAY_MS);
     yield call(axiosInstance.put, `users/${action.payload.id}`, sanitiseObject(action.payload));
     yield put(UsersActions.editUserSuccess());
     yield put(UsersActions.loadUsers());

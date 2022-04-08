@@ -3,6 +3,8 @@ import {usersSaga} from "./users/users-saga";
 import {foodEntriesSaga} from "./food-entries/food-entries-saga";
 import {reportingSaga} from "./reporting/reporting-saga";
 
+export const DELAY_MS = 1000;
+
 export function* rootSaga() {
   try {
     yield all([

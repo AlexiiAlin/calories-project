@@ -19,6 +19,9 @@ export const foodEntriesReducer = (state = initialState, action: IAction) => {
     case FOOD_ENTRIES_ACTION_TYPES.LOAD_SUCCESS: {
       return {...state, loading: false, data: action.payload};
     }
+    case FOOD_ENTRIES_ACTION_TYPES.LOAD_FAILED: {
+      return {...state, loading: false, error: action.error};
+    }
     case FOOD_ENTRIES_ACTION_TYPES.CREATE_START: {
       return {...state, loading: true, created: false};
     }
@@ -42,6 +45,9 @@ export const foodEntriesReducer = (state = initialState, action: IAction) => {
     }
     case FOOD_ENTRIES_ACTION_TYPES.DELETE_SUCCESS: {
       return {...state, loading: false, deleted: true};
+    }
+    case FOOD_ENTRIES_ACTION_TYPES.DELETE_FAIL: {
+      return {...state, loading: false, deleted: false, error: action.error};
     }
     case FOOD_ENTRIES_ACTION_TYPES.RESET_STATE: {
       return {...initialState};

@@ -16,6 +16,9 @@ import {UserContext, UserType} from "../../../../contexts/user-context";
 import {useHistory} from "react-router-dom";
 import {USER_TYPE_ROUTE} from "../../../../routes";
 import {checkUserType} from "../../../../helpers/utils";
+import {useDispatch} from "react-redux";
+import {FoodEntriesActions} from "../../../../store/food-entries/food-entries-actions";
+import {UsersActions} from "../../../../store/users/users-actions";
 
 // core components
 
@@ -28,7 +31,12 @@ export default function NavbarDropdown() {
     const isUser = checkUserType(userContext, UserType.USER);
     const profileRoute = userContext && userContext.user && USER_TYPE_ROUTE[userContext.user.userType];
     const history = useHistory();
-    const logout = () => userContext.logout(history);
+    const dispatch = useDispatch();
+    const logout = () => {
+        dispatch(FoodEntriesActions.resetState());
+        dispatch(UsersActions.resetState());
+        userContext.logout(history);
+    }
 
     const isMenuOpen = Boolean(anchorEl);
 

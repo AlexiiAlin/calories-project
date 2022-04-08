@@ -3,6 +3,7 @@ import {FoodEntry} from "./food-entries-state";
 export const FOOD_ENTRIES_ACTION_TYPES = {
   LOAD_START: '[FOOD_ENTRIES]LOAD_START',
   LOAD_SUCCESS: '[FOOD_ENTRIES]LOAD_SUCCESS',
+  LOAD_FAILED: '[FOOD_ENTRIES]LOAD_FAILED',
   CREATE_START: '[FOOD_ENTRIES]CREATE_START',
   CREATE_SUCCESS: '[FOOD_ENTRIES]CREATE_SUCCESS',
   CREATE_FAIL: '[FOOD_ENTRIES]CREATE_FAIL',
@@ -26,6 +27,12 @@ export class FoodEntriesActions {
     return {
       type: FOOD_ENTRIES_ACTION_TYPES.LOAD_SUCCESS,
       payload: foodEntries
+    }
+  }
+  static loadFoodEntriesFailed(error) {
+    return {
+      type: FOOD_ENTRIES_ACTION_TYPES.LOAD_FAILED,
+      error
     }
   }
 

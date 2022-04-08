@@ -3,6 +3,7 @@ import {UserInfo} from "../../contexts/user-context";
 export const USERS_ACTION_TYPES = {
   LOAD_START: '[USERS]LOAD_START',
   LOAD_SUCCESS: '[USERS]LOAD_SUCCESS',
+  LOAD_FAILED: '[USERS]LOAD_FAILED',
   CREATE_START: '[USERS]CREATE_START',
   CREATE_SUCCESS: '[USERS]CREATE_SUCCESS',
   CREATE_FAIL: '[USERS]CREATE_FAIL',
@@ -25,6 +26,12 @@ export class UsersActions {
     return {
       type: USERS_ACTION_TYPES.LOAD_SUCCESS,
       payload: doctorsSchedules
+    }
+  }
+  static loadUsersFailed(error) {
+    return {
+      type: USERS_ACTION_TYPES.LOAD_FAILED,
+      error
     }
   }
 
