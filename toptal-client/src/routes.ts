@@ -68,15 +68,6 @@ export const userRoutes: Array<Route> = [
     roles: [UserType.USER]
   },
   {
-    path: "/calories",
-    name: "Calories dashboard",
-    icon: VpnKey,
-    iconColor: "Info",
-    component: CaloriesDashboard,
-    layout: ROUTES_LAYOUT.USER,
-    roles: [UserType.USER]
-  },
-  {
     path: "/profile",
     name: "Profile",
     icon: VpnKey,
@@ -102,6 +93,15 @@ export const userRoutes: Array<Route> = [
     icon: VpnKey,
     iconColor: "Info",
     component: AddEditFoodEntry,
+    layout: ROUTES_LAYOUT.USER,
+    roles: [UserType.USER]
+  },
+  {
+    path: "/calories",
+    name: "Calories dashboard",
+    icon: VpnKey,
+    iconColor: "Info",
+    component: CaloriesDashboard,
     layout: ROUTES_LAYOUT.USER,
     roles: [UserType.USER]
   },

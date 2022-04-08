@@ -5,7 +5,12 @@ import {AppState} from "../../../../store/app-state";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import {
-  mapFoodEntriesToData, mapFoodEntriesToRangeSeries, mapFoodEntriesToSeries, mapFoodEntriesToXAxisCategories
+  dateFormat,
+  mapFoodEntriesToData,
+  mapFoodEntriesToRangeSeries,
+  mapFoodEntriesToSeries,
+  mapFoodEntriesToXAxisCategories,
+  sortByDatesFn
 } from "../../../../helpers/mappers";
 import moment from "moment";
 import {highchartsOptions} from "./calories-dashboard.config";
@@ -30,30 +35,22 @@ function CaloriesDashboard(props) {
       .map(foodEntry => {
         return {
           ...foodEntry,
-          date: moment(foodEntry.date).format('DD MMM YYYY')
+          date: moment(foodEntry.date).format(dateFormat)
         }
       })
-      .sort((fe1, fe2) => {
-        const diff = moment(fe1.date).diff(moment(fe2.date));
-        if (diff > 0) {
-          return 1;
-        } else if (diff < 0) {
-          return -1;
-        }
-        return 0;
-      });
-
+      .sort((fe1, fe2) => sortByDatesFn(fe1.date, fe2.date));
+    console.log('foodEntries by day: ', foodEntriesByDay);
     return mapFoodEntriesToData(foodEntriesByDay);
-  }, [foodEntries])
+  }, [foodEntries]);
 
 
   useEffect(() => {
     if (foodEntries.length > 0) {
+      console.log('Agregated FE: ', aggregatedFoodEntries);
       const caloriesSeries = mapFoodEntriesToSeries(aggregatedFoodEntries);
       const categories = mapFoodEntriesToXAxisCategories(aggregatedFoodEntries);
       const userName = userState && userState.user && userState.user.name && `User name: ${userState.user.name}`;
 
-      console.log('series: ', caloriesSeries);
       setOptions({
         ...highchartsOptions,
         series: [
@@ -87,7 +84,6 @@ function CaloriesDashboard(props) {
     }
   }, [foodEntries, aggregatedFoodEntries, userState]);
 
-  console.log('re-render...');
   return (
     <div className="general-wrapper mt-8">
       <div className="w-full">

@@ -1,7 +1,7 @@
 import {FoodEntry} from "../store/food-entries/food-entries-state";
 import moment from "moment";
 
-export const dateFormat = 'DD MMM YYYY';
+export const dateFormat = 'YYYY-MM-DD';
 
 export const computePerDayObject = (sortedFoodEntries) => {
   if (sortedFoodEntries.length < 2) {
@@ -32,21 +32,35 @@ export const mapFoodEntriesToData = (foodEntries: FoodEntry[]) => {
     }, perDayObject);
 }
 
-export const mapFoodEntriesToSeries = (data): any => {
+export const mapFoodEntriesToSeries = (data: Object): any => {
   return {
     name: 'Calories',
-    data: Object.keys(data).map(key => data[key])
+    data: sortedPerDayArr(data).map(key => data[key])
   }
 }
 
-export const mapFoodEntriesToXAxisCategories = (data) => {
-  return Object.keys(data).map(key => {
-    return moment(key).format(dateFormat);
+export const mapFoodEntriesToXAxisCategories = (data: Object) => {
+  return sortedPerDayArr(data).map(key => {
+    return moment(key).format('DD MMM YYYY');
   });
 }
 
-export const mapFoodEntriesToRangeSeries = (data, maxValue) => {
+export const mapFoodEntriesToRangeSeries = (data: Object, maxValue) => {
   return Object.keys(data).map(_ => {
     return maxValue;
   });
+}
+
+const sortedPerDayArr = (data: Object) => {
+  return Object.keys(data).sort(sortByDatesFn);
+}
+
+export const sortByDatesFn = (date1, date2) => {
+  const diff = moment(date1).diff(moment(date2));
+  if (diff > 0) {
+    return 1;
+  } else if (diff < 0) {
+    return -1;
+  }
+  return 0;
 }
